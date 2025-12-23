@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechWorkshop | Ateliers Technologies</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #e63946;
+            --gray: #6c757d;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 20px rgba(0,0,0,0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary: #4895ef;
+            --secondary: #560bad;
+            --light: #121212;
+            --dark: #f8f9fa;
+            --card-bg: #1e1e1e;
+            --shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 30px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 50px;
+            height: 26px;
+            border-radius: 50px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 0 3px;
+            transition: var(--transition);
+        }
+
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            transition: var(--transition);
+            left: 3px;
+        }
+
+        .dark-mode .theme-toggle::after {
+            transform: translateX(24px);
+        }
+
+        /* Navigation */
+        .main-nav {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--light);
+            border-radius: 50px;
+            padding: 8px 15px;
+            width: 300px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            width: 100%;
+            padding: 5px 10px;
+            outline: none;
+            color: var(--dark);
+        }
+
+        .search-box i {
+            color: var(--gray);
+        }
+
+        /* Filter Menu */
+        .filter-section {
+            padding: 30px 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--accent);
+        }
+
+        .filter-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            background-color: var(--card-bg);
+            border: 2px solid #e9ecef;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            color: var(--dark);
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .filter-btn i {
+            font-size: 1.1rem;
+        }
+
+        /* Ateliers Grid */
+        .ateliers-section {
+            padding: 20px 0 50px;
+        }
+
+        .ateliers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .atelier-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .atelier-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .atelier-header {
+            padding: 25px 25px 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .atelier-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(247, 37, 133, 0.3);
+        }
+
+        .atelier-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .atelier-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .atelier-tech {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .atelier-duration {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .atelier-body {
+            padding: 20px 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .atelier-description {
+            margin-bottom: 20px;
+            color: var(--dark);
+            opacity: 0.8;
+            flex-grow: 1;
+        }
+
+        .atelier-progress {
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-value {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        .atelier-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .atelier-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .atelier-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            flex: 1;
+            justify-content: center;
+        }
+
+        .atelier-link:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .atelier-link.accent {
+            background-color: rgba(247, 37, 133, 0.1);
+            color: var(--accent);
+        }
+
+        .atelier-link.accent:hover {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .ateliers-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .filter-menu {
+                justify-content: center;
+            }
+            
+            .ateliers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <h1>TechWorkshop</h1>
+                </div>
+                <div class="header-controls">
+                    <button class="theme-toggle" id="themeToggle"></button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="container nav-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Rechercher un atelier...">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-filter"></i>
+                Filtrer par technologie
+            </h2>
+            <div class="filter-menu">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-th-large"></i>
+                    Tous les ateliers
+                </button>
+                <button class="filter-btn" data-filter="mysql">
+                    <i class="fas fa-database"></i>
+                    MySQL
+                </button>
+                <button class="filter-btn" data-filter="mongodb">
+                    <i class="fas fa-server"></i>
+                    MongoDB
+                </button>
+                <button class="filter-btn" data-filter="javascript">
+                    <i class="fab fa-js-square"></i>
+                    JavaScript
+                </button>
+                <button class="filter-btn" data-filter="react">
+                    <i class="fab fa-react"></i>
+                    React
+                </button>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Ateliers Section -->
+    <section class="ateliers-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-rocket"></i>
+                Nos ateliers
+            </h2>
+            <div class="ateliers-grid">
+                <!-- Atelier 1 SQL -->
+                <div class="atelier-card" data-tech="mysql">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Rapport</span>
+                        <h3 class="atelier-title">SQL Complet – Requêtes, Calculs, Optimisation et Sécurité</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fas fa-database"></i>
+                                MySQL
+                            </span>
+                            
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier1  </p>Complet – Connexion et gestion des bases de données dans MySQL.</p>           
+                        <div class="atelier-progress">
+                        </div>
+                        <div class="atelier-links">
+                            <a href="Atelier1 SQL.pdf" class="atelier-link">
+                                <i class="fas fa-book"></i>
+                                Rapport détaillé
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- Atelier 2 SQL -->
+                <div class="atelier-card" data-tech="mysql">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Rapport</span>
+                        <h3 class="atelier-title">Procédures et Fonctions Stockées en MySQL</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fas fa-database"></i>
+                                MySQL
+                            </span>
+                            
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier2  </p> Pratique – Gestion d’un Centre de Formation avec Procédures et Fonctions Stockées.</p>           
+                        <div class="atelier-progress">
+                        </div>
+                        <div class="atelier-links">
+                            <a href="Atelier2 SQL.pdf" class="atelier-link">
+                                <i class="fas fa-book"></i>
+                                Rapport détaillé
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Atelier 3 SQL -->
+                <div class="atelier-card" data-tech="mysql">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Rapport</span>
+                        <h3 class="atelier-title">Les Curseurs en MySQL</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fas fa-database"></i>
+                                MySQL
+                            </span>
+                            
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier3  </p> MySQL « Les curseurs » gestion budgétaire.</p>           
+                        <div class="atelier-progress">
+                        </div>
+                        <div class="atelier-links">
+                            <a href="Atelier3 SQL.pdf" class="atelier-link">
+                                <i class="fas fa-book"></i>
+                                Rapport détaillé
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Atelier 4 SQL -->
+                <div class="atelier-card" data-tech="mysql">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Rapport</span>
+                        <h3 class="atelier-title">Les Triggers (Déclencheurs) en MySQL</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fas fa-database"></i>
+                                MySQL
+                            </span>
+                            
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier4 </p>  Triggers Gestion des Comptes.</p>           
+                        <div class="atelier-progress">
+                        </div>
+                        <div class="atelier-links">
+                            <a href="Atelier4 SQL.pdf" class="atelier-link">
+                                <i class="fas fa-book"></i>
+                                Rapport détaillé
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Atelier 5 SQL -->
+                <div class="atelier-card" data-tech="mysql">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Rapport</span>
+                        <h3 class="atelier-title">EFF pour MySQL</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fas fa-database"></i>
+                                MySQL
+                            </span>
+                            
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier5  </p> Gestion des véhicules de service de la société DKM.</p>           
+                        <div class="atelier-progress">
+                        </div>
+                        <div class="atelier-links">
+                            <a href="Atelier5 SQL.pdf" class="atelier-link">
+                                <i class="fas fa-book"></i>
+                                Rapport détaillé
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Atelier 6 SQL -->
+                <div class="atelier-card" data-tech="mysql">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Rapport</span>
+                        <h3 class="atelier-title">EFF pour MySQL</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fas fa-database"></i>
+                                MySQL
+                            </span>
+                            
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier6 </p> Gestion des données notariales avec MySQL.</p>           
+                        <div class="atelier-progress">
+                        </div>
+                        <div class="atelier-links">
+                            <a href="Atelier6 SQL.pdf" class="atelier-link">
+                                <i class="fas fa-book"></i>
+                                Rapport détaillé
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Atelier 7 SQL -->
+                <div class="atelier-card" data-tech="mysql">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Rapport</span>
+                        <h3 class="atelier-title">EFF pour MySQL</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fas fa-database"></i>
+                                MySQL
+                            </span>
+                            
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier7 </p> Gestion des événements et inscriptions avec MySQL.</p>           
+                        <div class="atelier-progress">
+                        </div>
+                        <div class="atelier-links">
+                            <a href="Atelier7 SQL.pdf" class="atelier-link">
+                                <i class="fas fa-book"></i>
+                                Rapport détaillé
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+                <!-- Atelier 1 mongodb -->
+                <div class="atelier-card" data-tech="mongodb">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Rapport</span>
+                        <h3 class="atelier-title">Modélisation de données NoSQL</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fas fa-server"></i>
+                                MongoDB
+                            </span>
+                            <span class="atelier-duration">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier1  : </p> Gestion des Étudiants dans MongoDB avec Mockaroo.</p>
+                        <div class="atelier-links">
+                            <a href="Atelier1 mongodb.pdf" class="atelier-link">
+                                <i class="fas fa-book"></i>
+                                Rapport
+                            </a>
+                           
+                        </div>
+                    </div>
+                </div>
+                
+
+                <!-- Atelier 2 mongodb -->
+                <div class="atelier-card" data-tech="mongodb">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Rapport</span>
+                        <h3 class="atelier-title">Modélisation de données NoSQL.</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fas fa-server"></i>
+                                MongoDB
+                            </span>
+                            <span class="atelier-duration">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier2  : </p> Gestion des Produits dans un Système de Vente en Ligne avec MongoDB.</p>
+                        <div class="atelier-links">
+                            <a href="Atelier2 mongodb.pdf" class="atelier-link">
+                                <i class="fas fa-book"></i>
+                                Rapport
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Atelier 3 mongodb -->
+                <div class="atelier-card" data-tech="mongodb">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Rapport</span>
+                        <h3 class="atelier-title">Comprendre et utiliser les fonctions d'agrégation dans MongoDB.</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fas fa-server"></i>
+                                MongoDB
+                            </span>
+                            <span class="atelier-duration">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier3  : </p> Requêtes Avancées et Agrégations dans un Système de Vente en Ligne avec MongoDB.</p>
+                        <div class="atelier-links">
+                            <a href="Atelier3 mongodb.pdf" class="atelier-link">
+                                <i class="fas fa-book"></i>
+                                Rapport
+                            </a>
+                           
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- Atelier 4 mongodb -->
+                <div class="atelier-card" data-tech="mongodb">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Rapport</span>
+                        <h3 class="atelier-title">la création d'index , l'utilisation des vues, la gestion des utilisateurs et l'exportation des données.</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fas fa-server"></i>
+                                MongoDB
+                            </span>
+                            <span class="atelier-duration">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier4  : </p> Gestion Avancée des Données dans un Système de Vente en Ligne avec MongoDB.</p>
+                        <div class="atelier-links">
+                            <a href="Atelier4 mongodb (2).pdf" class="atelier-link">
+                                <i class="fas fa-book"></i>
+                                Rapport
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Atelier 5 mongodb -->
+                <div class="atelier-card" data-tech="mongodb">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Rapport</span>
+                        <h3 class="atelier-title">EFF pour NoSQL.</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fas fa-server"></i>
+                                MongoDB
+                            </span>
+                            <span class="atelier-duration">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier5  : </p> Examen de fin de formation.</p>
+                        <div class="atelier-links">
+                            <a href="Atelier5 mongodb.pdf" class="atelier-link">
+                                <i class="fas fa-book"></i>
+                                Rapport
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Atelier 6 mongodb -->
+                <div class="atelier-card" data-tech="mongodb">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Rapport</span>
+                        <h3 class="atelier-title">Maîtriser l’utilisation de MongoDB avec Python.</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fas fa-server"></i>
+                                MongoDB
+                            </span>
+                            <span class="atelier-duration">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier6  : </p> ATELIER COMPLET : Python + MongoDB (TD pédagogique).</p>
+                        <div class="atelier-links">
+                            <a href="Atelier6 mongodb.pdf" class="atelier-link">
+                                <i class="fas fa-book"></i>
+                                Rapport
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                 <!-- Atelier 7 mongodb -->
+                <div class="atelier-card" data-tech="mongodb">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Rapport</span>
+                        <h3 class="atelier-title"> Construire une application graphique Python (Tkinter) connectée à MongoDB Atlas.</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fas fa-server"></i>
+                                MongoDB
+                            </span>
+                            <span class="atelier-duration">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier7  : </p> Application graphique Python + MongoDB Atlas “Back-office des stagiaires du centre de formation.</p>
+                        <div class="atelier-links">
+                            <a href="Atelier7 mongodb.pdf" class="atelier-link">
+                                <i class="fas fa-book"></i>
+                                Rapport
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+                <!-- Atelier 1 javascript -->
+                <div class="atelier-card" data-tech="javascript">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Lien GitLab</span>
+                        <h3 class="atelier-title">conception détaillée pour le jeu "Pierre, Feuille, Ciseaux" en JavaScript</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fab fa-js-square"></i>
+                                JavaScript
+                            </span>
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier1  : </p>Jeu "Pierre, Feuille, Ciseaux".</p>
+                     
+                        <div class="atelier-links">
+                            
+                            <a href="https://tp-pierre-feuille-ciseaux-d53499.gitlab.io/" class="atelier-link accent">
+                                <i class="fas fa-play-circle"></i>
+                                Lien GitLab
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Atelier 2 javascript -->
+                <div class="atelier-card" data-tech="javascript">
+                    <div class="atelier-header">
+                        <span class="atelier-badge">Lien GitLab</span>
+                        <h3 class="atelier-title">TP-Mini projet Al-Qur’ān Al-Karīm</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fab fa-js-square"></i>
+                                JavaScript
+                            </span>
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier2  : </p>développer une application web interactive en JavaScript qui interroge une API externe.</p>
+                     
+                        <div class="atelier-links">
+                            
+                            <a href="https://tp-al-quran-al-karim-6766b6.gitlab.io" class="atelier-link accent">
+                                <i class="fas fa-play-circle"></i>
+                                Lien GitLab
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+                <!-- Atelier 1 React -->
+                <div class="atelier-card" data-tech="react">
+                    <div class="atelier-header">
+                        <h3 class="atelier-title">création d’un projet React avec Vite</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fab fa-react"></i>
+                                React
+                            </span>
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier1  : </p>Construire la mini-application React “FruityApp”.</p>
+                      
+                        <div class="atelier-links">
+                            <a href=" https://atelier1-react-0e3eb1.gitlab.io" class="atelier-link accent">
+                                <i class="fas fa-play-circle"></i>
+                                Lien GitLab
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- Atelier 2 React -->
+                <div class="atelier-card" data-tech="react">
+                    <div class="atelier-header">
+                        <h3 class="atelier-title">Étude de Cas-Création d'une Application de Carte de Profils</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fab fa-react"></i>
+                                React
+                            </span>
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier2  : </p>développer une mini-application React permettant de gérer et 
+d’afficher des cartes de profils de participants à un hackathon.</p>
+                      
+                        <div class="atelier-links">
+                            <a href="https://atelier2-react-915d06.gitlab.io" class="atelier-link accent">
+                                <i class="fas fa-play-circle"></i>
+                                Lien GitLab
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Atelier 3 React -->
+                <div class="atelier-card" data-tech="react">
+                    <div class="atelier-header">
+                        <h3 class="atelier-title">Étude de cas – Application de gestion de profils (ajout + suppression)</h3>
+                        <div class="atelier-meta">
+                            <span class="atelier-tech">
+                                <i class="fab fa-react"></i>
+                                React
+                            </span>
+                        </div>
+                    </div>
+                    <div class="atelier-body">
+                        <p class="atelier-description"><p style="font-weight:bold ;">Atelier2  : </p>créeation d'une petite application React qui 
+                    affiche une liste de cartes profils, permet d’ajouter un profil via un formulaire et permet de supprimer un profil de la liste.</p>
+                      
+                        <div class="atelier-links">
+                            <a href="https://atelier3-react-f778d6.gitlab.io" class="atelier-link accent">
+                                <i class="fas fa-play-circle"></i>
+                                Lien GitLab
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                
+               
+            </div>
+        </div>
+    </section>
+    
+
+    <script>
+        // Filtrage des ateliers
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const atelierCards = document.querySelectorAll('.atelier-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Retirer la classe active de tous les boutons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Ajouter la classe active au bouton cliqué
+                    this.classList.add('active');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Filtrer les ateliers
+                    atelierCards.forEach(card => {
+                        if (filterValue === 'all' || card.getAttribute('data-tech') === filterValue) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Mode sombre/clair
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+            });
+            
+            // Animation des barres de progression
+            const progressBars = document.querySelectorAll('.progress-value');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
